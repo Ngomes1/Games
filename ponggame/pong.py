@@ -36,6 +36,20 @@ ball.goto(0,0)
 ball.dx = .20
 ball.dy = .20
 
+#Creating a scoring functionality. Note .hideturtle hides the shape/"page" but allows the user to see the writen words from the .write method.
+
+score_a = 0
+score_b = 0
+
+scoreboard = turtle.Turtle()
+scoreboard.color("white")
+scoreboard.shape("square")
+scoreboard.speed(0)
+scoreboard.hideturtle()
+scoreboard.penup()
+scoreboard.goto(0,250)
+scoreboard.write("Player A: 0 | Player B: 0", align= "center", font=("TimesNewRoman", 18 , "bold"))
+
 #creating movement
 def pad_a_up():
     y = pad_a.ycor()
@@ -67,6 +81,7 @@ game.onkeypress(pad_b_up,"o")
 game.onkeypress(pad_b_down,"l")
 
 
+
 while True:
     game.update()
 
@@ -87,11 +102,23 @@ while True:
     if ball.xcor() > 390:
         ball.goto(0,0)
         ball.dx = -.20
+    # making it so if the ball goes to passed the paddle on right side then paddle a (pad_a) gets a point here.
+        score_a += 1
+    #this .clear() method's purpose is so that it doesnt "print" its default over itself in other words refressing a blank slate
+        scoreboard.clear()
+    #now formating or updating the initial scoreboard requires a format method.
+        scoreboard.write("Player A: {} | Player B: {}".format(score_a, score_b), align= "center", font=("TimesNewRoman", 18 , "bold"))
 
     if ball.xcor() < -390:
         ball.goto(0, 0)
         ball.dx = .20
-    
+    # making it so if the ball goes to passed the paddle on right side then paddle a (pad_a) gets a point here.    
+        score_b += 1
+    #this .clear() method's purpose is so that it doesnt "print" its default over itself in other words refressing a blank slate
+        scoreboard.clear()
+
+    #now formating or updating the initial scoreboard requires a format method.
+        scoreboard.write("Player A: {} | Player B: {}".format(score_a, score_b), align= "center", font=("TimesNewRoman", 18 , "bold"))
 #*need to study this part* Making the ball bounce of the paddles.
     if (ball.xcor() > 340 and ball.xcor() < 350) and (ball.ycor() < pad_b.ycor() + 40 and ball.ycor() > pad_b.ycor() - 40):
         ball.setx(340)
